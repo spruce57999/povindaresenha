@@ -6,6 +6,7 @@ import java.util.InputMismatchException;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
@@ -13,7 +14,7 @@ import javax.swing.SwingUtilities;
 public class Main {
     public static void main(String[] args){
         // main
-        Conta conta = new Conta(0, 0, 0, "Tião", "000111222333-44");
+        Conta conta = new Conta(0, 0, 0, "", "");
 
         try{
             conta.Depositar(0);
@@ -53,10 +54,6 @@ public class Main {
             JLabel suaAgencia = new JLabel("Sua Agência: ");
             JButton botaoDeposito = new JButton("Fazer Depósito");
             JButton botaoSair = new JButton("Sair");
-            botaoDeposito.addActionListener(e -> {
-                janela.setVisible(true);
-                janela2.setVisible(false);
-            });
             botaoSair.addActionListener(e -> {
                 System.exit(0);
             });
@@ -79,34 +76,39 @@ public class Main {
 
             painel2.add(seuCPF); //label
             painel2.add(digitarCPF); //textfield
-            //painel2.add(new JLabel(conta.getCPF())); //execução
-            //painel2.add(botaoCPF);
-//            painel2.
 
             painel2.add(seuTitular); //label
             painel2.add(digitarTitular);
-            conta.setTitular(digitarTitular.toString());
-//            painel2.add(new JLabel(conta.getTitular()));
-//            painel2.add(botaoTitular);
 
             painel2.add(suaConta);
             painel2.add(digitarConta);
-//            painel2.add(new JLabel(String.valueOf(conta.getConta())));
-//            painel2.add(botaoConta);
 
             painel2.add(suaAgencia);
             painel2.add(digitarAgencia);
-//            painel2.add(new JLabel(String.valueOf(conta.getAgencia())));
-//            painel2.add(botaoAgencia);
-
-            if(digitarTitular.getText().isEmpty()){
-                System.out.println("Titular vazio");
-            }
-
-            //fazer um pra cada
 
             painel2.add(botaoDeposito);
             painel2.add(botaoSair);
+
+            botaoDeposito.addActionListener(e -> {
+                String cpf = digitarCPF.getText(); //pegando o valor que foi digitado no text cpf
+
+                if (cpf.isEmpty()) { //validando valor da variável cpf
+                    JOptionPane.showMessageDialog(janela2, "Preencher o CPF.", "Erro", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                //aqui tem que validar os valores das outras variáveis
+
+                //colocando os valores digitados no objeto conta
+                conta.setCPF(cpf); //aqui coloquei o valor validado da vaiável cpf e nos abaixo não está validado
+                conta.setTitular(digitarTitular.getText());
+                conta.setConta(Integer.parseInt(digitarConta.getText()));
+                conta.setAgencia(Integer.parseInt(digitarAgencia.getText()));
+
+                texto.setText("Olá " + conta.getTitular() + " digite o valor que gostaria de depositar:");
+                janela.setVisible(true);
+                janela2.setVisible(false);
+            });
 
             //botão
 
@@ -123,7 +125,6 @@ public class Main {
                     texto.setText(ex.getMessage());
                 }
             });
-            
         });
     }
 }
