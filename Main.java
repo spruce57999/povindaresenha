@@ -1,6 +1,6 @@
 package Banco;
 
-import java.awt.Color;
+import java.awt.*;
 import java.util.InputMismatchException;
 
 import javax.swing.JButton;
@@ -13,10 +13,10 @@ import javax.swing.SwingUtilities;
 public class Main {
     public static void main(String[] args){
         // main
-        Conta conta = new Conta(0, 0, 0, " ", " ");
+        Conta conta = new Conta(0, 0, 0, "Tião", "000111222333-44");
 
         try{
-            conta.Depositar(2);
+            conta.Depositar(0);
         }catch(IllegalArgumentException e){
             System.out.println(e.getMessage());
         }catch(InputMismatchException r){
@@ -38,7 +38,7 @@ public class Main {
 
 
             // painel 1
-            JPanel painel2 = new JPanel();
+            JPanel painel2 = new JPanel(new GridLayout(5, 2, 8, 8));
             painel2.setBackground(Color.CYAN);
             janela2.add(painel2);
 
@@ -51,23 +51,23 @@ public class Main {
             JLabel seuTitular = new JLabel("Seu Nome Completo:");
             JLabel suaConta = new JLabel("Sua Conta: ");
             JLabel suaAgencia = new JLabel("Sua Agência: ");
-            JButton botao2 = new JButton("Fazer Depósito");
-            JButton botao3 = new JButton("Sair");
-            botao2.addActionListener(e -> {
+            JButton botaoDeposito = new JButton("Fazer Depósito");
+            JButton botaoSair = new JButton("Sair");
+            botaoDeposito.addActionListener(e -> {
                 janela.setVisible(true);
                 janela2.setVisible(false);
             });
-            botao3.addActionListener(e -> {
+            botaoSair.addActionListener(e -> {
                 System.exit(0);
             });
             JTextField digitarCPF = new JTextField(15);
-            JButton botao1 = new JButton("Confirmar");
+            JButton botaoCPF = new JButton("Confirmar");
             JTextField digitarTitular = new JTextField(15);
-            JButton botao4 = new JButton("Confirmar");
+            JButton botaoTitular = new JButton("Confirmar");
             JTextField digitarConta = new JTextField(15);
-            JButton botao5 = new JButton("Confirmar");
+            JButton botaoConta = new JButton("Confirmar");
             JTextField digitarAgencia = new JTextField(15);
-            JButton botao6 = new JButton("Confirmar");
+            JButton botaoAgencia = new JButton("Confirmar");
 
             JLabel texto = new JLabel("Olá " + conta.getTitular() + " digite o valor que gostaria de depositar:");
             JTextField digitar = new JTextField(15);
@@ -77,24 +77,36 @@ public class Main {
             painel.add(digitar);
             painel.add(botao);
 
-            painel2.add(seuCPF);
-            painel2.add(new JLabel(conta.getCPF()));
-            painel2.add(seuTitular);
-            painel2.add(new JLabel(conta.getTitular()));
-            painel2.add(suaConta);
-            painel2.add(new JLabel(String.valueOf(conta.getConta())));
-            painel2.add(suaAgencia);
-            painel2.add(new JLabel(String.valueOf(conta.getAgencia())));
-            painel2.add(botao2);
-            painel2.add(botao3);
-            painel2.add(digitarCPF);
-            painel2.add(botao1);
+            painel2.add(seuCPF); //label
+            painel2.add(digitarCPF); //textfield
+            //painel2.add(new JLabel(conta.getCPF())); //execução
+            //painel2.add(botaoCPF);
+//            painel2.
+
+            painel2.add(seuTitular); //label
             painel2.add(digitarTitular);
-            painel2.add(botao4);
+            conta.setTitular(digitarTitular.toString());
+//            painel2.add(new JLabel(conta.getTitular()));
+//            painel2.add(botaoTitular);
+
+            painel2.add(suaConta);
             painel2.add(digitarConta);
-            painel2.add(botao5);
+//            painel2.add(new JLabel(String.valueOf(conta.getConta())));
+//            painel2.add(botaoConta);
+
+            painel2.add(suaAgencia);
             painel2.add(digitarAgencia);
-            painel2.add(botao6);
+//            painel2.add(new JLabel(String.valueOf(conta.getAgencia())));
+//            painel2.add(botaoAgencia);
+
+            if(digitarTitular.getText().isEmpty()){
+                System.out.println("Titular vazio");
+            }
+
+            //fazer um pra cada
+
+            painel2.add(botaoDeposito);
+            painel2.add(botaoSair);
 
             //botão
 
